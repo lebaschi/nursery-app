@@ -1,77 +1,45 @@
-# Interested in working for Famly?
+# NURSERY APPLICATION
 
-Give us a chance to see your beautiful code! 🤩
+Briefly describe your project, including its purpose and any unique features or technologies it uses.
 
-## How to get started
-- Fork this repository
-- Create a small application in React (or another agreed upon framework)
-- Describe your design decisions and setup instructions in the README.md of the forked repository
+## Design Decisions
 
-## The assignment
-You are tasked to build a simple application for a nursery to manage the attendance of children each day.
+### Data Fetching and Pagination
+- **Client-Side Pagination**: Due to the lack of server-side pagination support in the API, the application fetches all data at once and implements client-side pagination. This approach allows for a smoother user experience with infinite scrolling, as data is incrementally displayed as the user scrolls down.
+- **PAGE_SIZE**: Set to 5 to balance between initial load performance and user interaction, minimizing wait times while ensuring a steady flow of new content during scrolling.
 
-The application should be able to do 3 things:
-1. List children with some form of pagination/lazy-loading/infinite-scroll
-2. Checkin a child
-3. Checkout a child
+### Infinite Scrolling
+- **Implementation**: Utilizes the Intersection Observer API for efficient, event-driven data loading, triggered when the user scrolls to the bottom of the current content.
+- **Performance Considerations**: By dynamically loading content and unloading off-screen content, the application optimizes resource usage and maintains high performance, even with large datasets.
 
-Don't worry about design or anything like that.
+### Error Handling
+- Describes how errors from the API (e.g., network issues or data fetching errors) are handled and communicated to the user, ensuring a robust user experience.
 
-If you have any questions feel free to reach out to the person who sent you the assignment ☺️
+## Setup Instructions
 
-## API Specification
+1. **Clone the Repository**
+- git clone https://github.com/lebaschi/nursery-app.git
+- cd nursery-app
 
-You have received an access token in the email that contained the link to this page.
 
-### Fetch some children from
+2. **Install Dependencies**
+- Ensure you have Node.js installed.
+- Run `npm install` to install the project dependencies.
 
-The API does not support any limit or offset, so the pagination/lazy-loading/infinite-scroll will have to be done client-side only.
+3. **Configuration**
+- Create a `.env` file in the root directory.
+- Add the following line, replacing `YOUR_ACCESS_TOKEN` with your actual access token:
+  ```
+  REACT_APP_ACCESS_TOKEN=YOUR_ACCESS_TOKEN
+  ```
 
-```
-GET https://app.famly.co/api/daycare/tablet/group
-Arguments: {
-	accessToken: <accessToken>,
-	groupId: '86413ecf-01a1-44da-ba73-1aeda212a196',
-	institutionId: 'dc4bd858-9e9c-4df7-9386-0d91e42280eb'
-}
-```
+4. **Running the Application**
+- Start the application with `npm start`. This will run the app in development mode, accessible at `http://localhost:3000`.
 
-Example in cURL:
+5. **Building for Production**
+- To build the app for production, run `npm run build`. This optimizes the build for the best performance.
 
-```bash
-curl "https://app.famly.co/api/daycare/tablet/group?accessToken=<accessToken>&groupId=86413ecf-01a1-44da-ba73-1aeda212a196&institutionId=dc4bd858-9e9c-4df7-9386-0d91e42280eb"
-```
 
-### Checkin child
-```
-POST https://app.famly.co/api/v2/children/<childId>/checkins
 
-Arguments: {
-	accessToken: <accessToken>
-	pickupTime: 16:00
-}
-```
 
-Example in cURL:
 
-```bash
-curl \
-  -d 'accessToken=<accessToken>&pickupTime=16:00' \
-  https://app.famly.co/api/v2/children/fcd683d0-bc31-468c-948f-1ca70b91439d/checkins
-```
-
-### Checkout child
-```
-POST https://app.famly.co/api/v2/children/<childId>/checkout
-Arguments: {
-	accessToken: <accessToken>
-}
-```
-
-Example in cURL:
-
-```bash
-curl \
-  -d 'accessToken=<accessToken>' \
-  https://app.famly.co/api/v2/children/fcd683d0-bc31-468c-948f-1ca70b91439d/checkout
-```
