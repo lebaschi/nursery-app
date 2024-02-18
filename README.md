@@ -1,7 +1,5 @@
 # NURSERY APPLICATION
 
-Briefly describe your project, including its purpose and any unique features or technologies it uses.
-
 ## Design Decisions
 
 ### Data Fetching and Pagination
